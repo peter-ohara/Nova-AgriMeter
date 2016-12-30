@@ -13,7 +13,8 @@
     android:layout_marginStart="8dp"
     app:layout_constraintLeft_toLeftOf="parent"
     android:layout_marginLeft="8dp"
-    tools:showIn="@layout/content_main">
+    tools:showIn="@layout/content_main"
+    app:cardBackgroundColor="@color/cardbgcolor">
 
     <include
         android:layout_width="match_parent"
