@@ -1,5 +1,6 @@
 package com.novaagrisystems.agrimeter;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -36,17 +37,11 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        setRoundColoredIcons();
 
+    }
 
-
+    private void setRoundColoredIcons() {
         TextDrawable humidityDrawable = TextDrawable.builder()
                 .buildRound("H", Color.RED);
         humidityImageView.setImageDrawable(humidityDrawable);
@@ -62,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
         TextDrawable lightDrawable = TextDrawable.builder()
                 .buildRound("L", Color.MAGENTA);
         lightImageView.setImageDrawable(lightDrawable);
-
     }
 
     @Override
@@ -91,7 +85,8 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.humidityCard)
     public void openhumidityCard() {
-        Toast.makeText(this, "Opening the humidityCard", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(MainActivity.this, HumidityDetails.class);
+        startActivity(intent);
     }
 
     @OnClick(R.id.temperatureCard)
