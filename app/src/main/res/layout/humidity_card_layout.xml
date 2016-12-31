@@ -28,23 +28,36 @@
         android:layout_marginStart="8dp"
         app:layout_constraintLeft_toRightOf="@+id/humidityImageView"
         android:layout_marginLeft="8dp"
-        android:textSize="24sp" />
+        tools:textSize="24sp"
+        tools:textColor="@color/cardview_light_background" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/date"
+        android:id="@+id/currentDate1"
         app:layout_constraintBottom_toBottomOf="@+id/humidityImageView"
         android:layout_marginStart="8dp"
         app:layout_constraintLeft_toRightOf="@+id/humidityImageView"
         android:layout_marginLeft="8dp"
-        android:text="10th January 2016" />
+        tools:text="10th January 2016"
+        tools:textColor="@color/cardview_light_background" />
 
     <TextView
-        android:text="90%"
+        tools:text=" 2:26pm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/currentValue"
+        android:id="@+id/currentTime1"
+        app:layout_constraintBottom_toBottomOf="@+id/currentDate1"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/currentDate1"
+        android:layout_marginLeft="8dp"
+        tools:textColor="@color/cardview_light_background" />
+
+    <TextView
+        tools:text="90%"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/humidityValue"
         android:layout_marginEnd="16dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginRight="16dp"
@@ -52,15 +65,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toTopOf="parent"
-        android:textSize="36sp" />
+        tools:textSize="36sp"
+        tools:textColor="@color/value_color" />
 
-    <TextView
-        android:text=" 2:26pm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/time"
-        app:layout_constraintBottom_toBottomOf="@+id/date"
-        android:layout_marginStart="8dp"
-        app:layout_constraintLeft_toRightOf="@+id/date"
-        android:layout_marginLeft="8dp" />
 </android.support.constraint.ConstraintLayout>

@@ -3,7 +3,6 @@ package com.novaagrisystems.agrimeter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -38,7 +37,6 @@ public class HumidityDetails extends AppCompatActivity {
 
     public static final String TAG = HumidityDetails.class.getSimpleName();
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.currentDate) TextView currentDate;
     @BindView(R.id.currentTime) TextView currentTime;
     @BindView(R.id.currentValue) TextView currentValue;
@@ -54,10 +52,11 @@ public class HumidityDetails extends AppCompatActivity {
     DatabaseReference humiditySensorRef = database.getReference("sensorData").child("humidity");
 
     private LineGraphSeries<DataPoint> series;
-    private double graph2LastXValue = 5d;
     private List<SensorEvent> sensorEvents;
     private long minX;
     private long maxX;
+    private ChildEventListener sensorEventListener;
+    private SensorEvent previousSensorEvent = new SensorEvent(0L, 0F);
 
 
     @Override
@@ -66,9 +65,6 @@ public class HumidityDetails extends AppCompatActivity {
         setContentView(R.layout.activity_humidity_details);
         ButterKnife.bind(this);
 
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         series = new LineGraphSeries<>(new DataPoint[] { new DataPoint(0, 0) });
         sensorGraph.addSeries(series);
 
@@ -76,7 +72,8 @@ public class HumidityDetails extends AppCompatActivity {
     }
 
     private void getAxisBoundaries() {
-        humiditySensorRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        humiditySensorRef.limitToFirst(100)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d(TAG, "getAxisBoundaries: returned");
@@ -85,8 +82,6 @@ public class HumidityDetails extends AppCompatActivity {
                     Log.d(TAG, "getAxisBoundaries: returned null");
                     return;
                 }
-
-
 
                 sensorEvents = new ArrayList<>();
                 for (DataSnapshot sensorEventSnapshot : dataSnapshot.getChildren()) {
@@ -128,11 +123,6 @@ public class HumidityDetails extends AppCompatActivity {
     }
 
     private void setGraphProperties() {
-        Calendar calendar = Calendar.getInstance();
-        Date now = calendar.getTime();
-        calendar.add(Calendar.DATE, -7);
-        Date lastWeek = calendar.getTime();
-
         sensorGraph.getViewport().setYAxisBoundsManual(true);
         sensorGraph.getViewport().setMinY(0);
         sensorGraph.getViewport().setMaxY(100);
@@ -149,12 +139,17 @@ public class HumidityDetails extends AppCompatActivity {
     }
 
     private void setUpSensorEventListener() {
-        humiditySensorRef.addChildEventListener(new ChildEventListener() {
+        sensorEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 SensorEvent sensorEvent = dataSnapshot.getValue(SensorEvent.class);
                 Log.d(TAG, "onChildAdded:" + sensorEvent.datetime + " : " + sensorEvent.value);
 
+                if (sensorEvent.datetime <= previousSensorEvent.datetime) {
+                    return;
+                }
+
+                previousSensorEvent = sensorEvent;
 
                 setSummary();
                 currentDate.setText(getDate(sensorEvent.datetime));
@@ -192,59 +187,38 @@ public class HumidityDetails extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
+        };
+        humiditySensorRef.addChildEventListener(sensorEventListener);
     }
 
-    private void setValueDescription() {
+    public void setValueDescription() {
         valueDescription.setText("Your plants aren't getting enough light. Please consider a sunnier location or supplement with grow lights.");
     }
 
-    private void setSummary() {
+    public void setSummary() {
         summary.setText("Medium");
     }
 
-    @OnClick(R.id.currentValue)
-    public void update() {
-        Log.d(TAG, "update: ");
-        graph2LastXValue += 1d;
-        series.appendData(
-                new DataPoint(graph2LastXValue, getRandom()),
-                true,
-                40
-        );
-    }
-
-    private String getDate(long time) {
+    public static String getDate(long time) {
         //SimpleDateFormat formatter = new SimpleDateFormat("EEEE, MMMM d, yyyy HH:mm");
         SimpleDateFormat formatter = new SimpleDateFormat("EEEE, MMMM d");
         String dateString = formatter.format(new Date(time * 1000L));
         return dateString;
     }
 
-    private String getTime(long time) {
+    public static String getTime(long time) {
         SimpleDateFormat formatter = new SimpleDateFormat("hh:mm:ss a");
         String dateString = formatter.format(new Date(time * 1000L));
         return dateString;
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
 
-    private DataPoint[] generateData() {
-        int count = 30;
-        DataPoint[] values = new DataPoint[count];
-        for (int i=0; i<count; i++) {
-            double x = i;
-            double f = mRand.nextDouble()*0.15+0.3;
-            double y = Math.sin(i*f+2) + mRand.nextDouble()*0.3;
-            DataPoint v = new DataPoint(x, y);
-            values[i] = v;
+        // Remove sensor value event listener
+        if (sensorEventListener != null) {
+            humiditySensorRef.removeEventListener(sensorEventListener);
         }
-        return values;
     }
-
-    double mLastRandom = 2;
-    Random mRand = new Random();
-    private double getRandom() {
-        return mLastRandom += mRand.nextDouble()*0.5 - 0.25;
-    }
-
 }

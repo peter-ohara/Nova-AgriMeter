@@ -9,4 +9,11 @@ public class SensorEvent {
     public Long datetime;
     public Float value;
 
+    public SensorEvent() {
+    }
+
+    public SensorEvent(Long datetime, Float value) {
+        this.datetime = datetime;
+        this.value = value;
+    }
 }
