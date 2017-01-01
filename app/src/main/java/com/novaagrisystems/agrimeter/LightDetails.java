@@ -26,9 +26,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HumidityDetails extends AppCompatActivity {
+public class LightDetails extends AppCompatActivity {
 
-    public static final String TAG = HumidityDetails.class.getSimpleName();
+    public static final String TAG = LightDetails.class.getSimpleName();
 
     @BindView(R.id.currentValue) TextView currentValue;
     @BindView(R.id.sensorGraph) ValueLineChart sensorGraph;
@@ -36,11 +36,11 @@ public class HumidityDetails extends AppCompatActivity {
     @BindView(R.id.summary) TextView summary;
     @BindView(R.id.valueDescription) TextView valueDescription;
 
-    @BindView(R.id.humidityMeterLabel) TextView humidityMeterLabel;
-    @BindView(R.id.humidityMeter) ProgressBar humidityMeter;
+    @BindView(R.id.lightMeterLabel) TextView lightMeterLabel;
+    @BindView(R.id.lightMeter) ProgressBar lightMeter;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference humiditySensorRef = database.getReference("sensorData").child("humidity");
+    DatabaseReference lightSensorRef = database.getReference("sensorData").child("light");
 
     private ValueLineSeries series = new ValueLineSeries();
     private ValueEventListener sensorEventListener;
@@ -50,7 +50,7 @@ public class HumidityDetails extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_humidity_details);
+        setContentView(R.layout.activity_light_details);
         ButterKnife.bind(this);
 
         series.setColor(Color.parseColor("#FFFFFF"));
@@ -89,8 +89,8 @@ public class HumidityDetails extends AppCompatActivity {
                 currentValue.setText(previousSensorEvent.value.intValue() + "%");
                 setValueDescription();
 
-                humidityMeterLabel.setText(previousSensorEvent.value.intValue() + "%");
-                humidityMeter.setProgress(previousSensorEvent.value.intValue());
+                lightMeterLabel.setText(previousSensorEvent.value.intValue() + "%");
+                lightMeter.setProgress(previousSensorEvent.value.intValue());
 
                 sensorGraph.addSeries(series);
 //                sensorGraph.addStandardValue(50);
@@ -104,7 +104,7 @@ public class HumidityDetails extends AppCompatActivity {
             }
         };
 
-        humiditySensorRef.limitToFirst(144)
+        lightSensorRef.limitToFirst(144)
                 .addValueEventListener(sensorEventListener);
     }
 
@@ -135,7 +135,7 @@ public class HumidityDetails extends AppCompatActivity {
 
         // Remove sensor value event listener
         if (sensorEventListener != null) {
-            humiditySensorRef.removeEventListener(sensorEventListener);
+            lightSensorRef.removeEventListener(sensorEventListener);
         }
     }
 }

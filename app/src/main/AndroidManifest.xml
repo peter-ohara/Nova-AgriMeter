@@ -11,7 +11,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,6 +21,33 @@
         <activity
             android:name=".HumidityDetails"
             android:label="@string/title_activity_humidity_details"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.Dark">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.novaagrisystems.agrimeter.MainActivity" />
+        </activity>
+        <activity
+            android:name=".LightDetails"
+            android:label="@string/title_activity_light_details"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.Dark">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.novaagrisystems.agrimeter.MainActivity" />
+        </activity>
+        <activity
+            android:name=".TemperatureDetails"
+            android:label="@string/title_activity_temperature_details"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.Dark">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.novaagrisystems.agrimeter.MainActivity" />
+        </activity>
+        <activity
+            android:name=".MoistureDetails"
+            android:label="@string/title_activity_moisture_details"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.Dark">
             <meta-data

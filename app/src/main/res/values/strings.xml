@@ -2,4 +2,7 @@
     <string name="app_name">Nova Agrimeter</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_humidity_details">Humidity</string>
+    <string name="title_activity_light_details">LightDetails</string>
+    <string name="title_activity_temperature_details">TemperatureDetails</string>
+    <string name="title_activity_moisture_details">MoistureDetails</string>
 </resources>

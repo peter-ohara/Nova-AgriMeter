@@ -26,9 +26,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HumidityDetails extends AppCompatActivity {
+public class MoistureDetails extends AppCompatActivity {
 
-    public static final String TAG = HumidityDetails.class.getSimpleName();
+    public static final String TAG = MoistureDetails.class.getSimpleName();
 
     @BindView(R.id.currentValue) TextView currentValue;
     @BindView(R.id.sensorGraph) ValueLineChart sensorGraph;
@@ -36,11 +36,11 @@ public class HumidityDetails extends AppCompatActivity {
     @BindView(R.id.summary) TextView summary;
     @BindView(R.id.valueDescription) TextView valueDescription;
 
-    @BindView(R.id.humidityMeterLabel) TextView humidityMeterLabel;
-    @BindView(R.id.humidityMeter) ProgressBar humidityMeter;
+    @BindView(R.id.moistureMeterLabel) TextView moistureMeterLabel;
+    @BindView(R.id.moistureMeter) ProgressBar moistureMeter;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference humiditySensorRef = database.getReference("sensorData").child("humidity");
+    DatabaseReference moistureSensorRef = database.getReference("sensorData").child("soilMoisture");
 
     private ValueLineSeries series = new ValueLineSeries();
     private ValueEventListener sensorEventListener;
@@ -50,7 +50,7 @@ public class HumidityDetails extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_humidity_details);
+        setContentView(R.layout.activity_moisture_details);
         ButterKnife.bind(this);
 
         series.setColor(Color.parseColor("#FFFFFF"));
@@ -89,8 +89,8 @@ public class HumidityDetails extends AppCompatActivity {
                 currentValue.setText(previousSensorEvent.value.intValue() + "%");
                 setValueDescription();
 
-                humidityMeterLabel.setText(previousSensorEvent.value.intValue() + "%");
-                humidityMeter.setProgress(previousSensorEvent.value.intValue());
+                moistureMeterLabel.setText(previousSensorEvent.value.intValue() + "%");
+                moistureMeter.setProgress(previousSensorEvent.value.intValue());
 
                 sensorGraph.addSeries(series);
 //                sensorGraph.addStandardValue(50);
@@ -104,7 +104,7 @@ public class HumidityDetails extends AppCompatActivity {
             }
         };
 
-        humiditySensorRef.limitToFirst(144)
+        moistureSensorRef.limitToFirst(144)
                 .addValueEventListener(sensorEventListener);
     }
 
@@ -135,7 +135,7 @@ public class HumidityDetails extends AppCompatActivity {
 
         // Remove sensor value event listener
         if (sensorEventListener != null) {
-            humiditySensorRef.removeEventListener(sensorEventListener);
+            moistureSensorRef.removeEventListener(sensorEventListener);
         }
     }
 }

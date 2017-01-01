@@ -2,7 +2,6 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -23,30 +22,44 @@
         android:text="Moisture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/title"
+        android:id="@+id/moistureTitle"
         app:layout_constraintTop_toTopOf="@+id/moistureImageView"
         android:layout_marginStart="8dp"
         app:layout_constraintLeft_toRightOf="@+id/moistureImageView"
         android:layout_marginLeft="8dp"
-        android:textSize="24sp"
-        android:textColor="@color/cardview_light_background" />
+        tools:textSize="24sp"
+        tools:textColor="@color/cardview_light_background" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/date"
-        app:layout_constraintBottom_toBottomOf="@+id/moistureImageView"
+        android:id="@+id/moistureCurrentDate"
+        tools:text="10th January 2016"
+        tools:textColor="@color/cardview_light_background"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/moistureCurrentTime"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/moistureTitle" />
+
+    <TextView
+        tools:text=" 2:26pm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/moistureCurrentTime"
+        tools:textColor="@color/cardview_light_background"
         android:layout_marginStart="8dp"
         app:layout_constraintLeft_toRightOf="@+id/moistureImageView"
         android:layout_marginLeft="8dp"
-        android:text="10th January 2016"
-        android:textColor="@color/cardview_light_background" />
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/moistureTitle" />
 
     <TextView
-        android:text="90%"
+        tools:text="90%"
+        android:textSize="36sp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/currentValue"
+        android:layout_height="0dp"
+        android:id="@+id/currentMoistureValue"
         android:layout_marginEnd="16dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginRight="16dp"
@@ -54,17 +67,6 @@
         android:layout_marginBottom="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toTopOf="parent"
-        android:textSize="36sp"
-        android:textColor="@color/value_color" />
+        tools:textColor="@color/value_color" />
 
-    <TextView
-        android:text=" 2:26pm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/time"
-        app:layout_constraintBottom_toBottomOf="@+id/date"
-        android:layout_marginStart="8dp"
-        app:layout_constraintLeft_toRightOf="@+id/date"
-        android:layout_marginLeft="8dp"
-        android:textColor="@color/cardview_light_background" />
 </android.support.constraint.ConstraintLayout>
