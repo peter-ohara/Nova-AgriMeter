@@ -1,13 +1,12 @@
 package com.novaagrisystems.agrimeter;
 
-import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -18,9 +17,7 @@ import org.eazegraph.lib.charts.ValueLineChart;
 import org.eazegraph.lib.models.ValueLinePoint;
 import org.eazegraph.lib.models.ValueLineSeries;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -53,7 +50,7 @@ public class HumidityDetails extends AppCompatActivity {
         setContentView(R.layout.activity_humidity_details);
         ButterKnife.bind(this);
 
-        series.setColor(Color.parseColor("#FFFFFF"));
+        series.setColor(ResourcesCompat.getColor(getResources(), R.color.graphLineColor, null));
 
 
         getAxisBoundaries();
@@ -79,7 +76,7 @@ public class HumidityDetails extends AppCompatActivity {
                         continue;
                     }
                     sensorEvents.add(sensorEvent);
-                    series.addPoint(new ValueLinePoint(getTime(previousSensorEvent.datetime), sensorEvent.value));
+                    series.addPoint(new ValueLinePoint(Helpers.getTime(previousSensorEvent.datetime), sensorEvent.value));
 
                     previousSensorEvent = sensorEvent;
                 }
@@ -114,19 +111,6 @@ public class HumidityDetails extends AppCompatActivity {
 
     public void setSummary() {
         summary.setText("Medium");
-    }
-
-    public static String getDate(long time) {
-        //SimpleDateFormat formatter = new SimpleDateFormat("EEEE, MMMM d, yyyy HH:mm");
-        SimpleDateFormat formatter = new SimpleDateFormat("EEEE, MMM d");
-        String dateString = formatter.format(new Date(time * 1000L));
-        return dateString;
-    }
-
-    public static String getTime(long time) {
-        SimpleDateFormat formatter = new SimpleDateFormat("hh:mm a");
-        String dateString = formatter.format(new Date(time * 1000L));
-        return dateString;
     }
 
     @Override

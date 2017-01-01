@@ -2,6 +2,7 @@ package com.novaagrisystems.agrimeter;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ProgressBar;
@@ -25,6 +26,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.novaagrisystems.agrimeter.Helpers.getTime;
 
 public class TemperatureDetails extends AppCompatActivity {
 
@@ -53,7 +56,7 @@ public class TemperatureDetails extends AppCompatActivity {
         setContentView(R.layout.activity_temperature_details);
         ButterKnife.bind(this);
 
-        series.setColor(Color.parseColor("#FFFFFF"));
+        series.setColor(ResourcesCompat.getColor(getResources(), R.color.graphLineColor, null));
 
 
         getAxisBoundaries();
@@ -114,19 +117,6 @@ public class TemperatureDetails extends AppCompatActivity {
 
     public void setSummary() {
         summary.setText("Medium");
-    }
-
-    public static String getDate(long time) {
-        //SimpleDateFormat formatter = new SimpleDateFormat("EEEE, MMMM d, yyyy HH:mm");
-        SimpleDateFormat formatter = new SimpleDateFormat("EEEE, MMM d");
-        String dateString = formatter.format(new Date(time * 1000L));
-        return dateString;
-    }
-
-    public static String getTime(long time) {
-        SimpleDateFormat formatter = new SimpleDateFormat("hh:mm a");
-        String dateString = formatter.format(new Date(time * 1000L));
-        return dateString;
     }
 
     @Override

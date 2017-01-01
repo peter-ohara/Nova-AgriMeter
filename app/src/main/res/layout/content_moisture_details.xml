@@ -70,18 +70,18 @@
 
     <org.eazegraph.lib.charts.ValueLineChart
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:background="#5C6BC0"
+        android:background="@color/moistureLight"
 
         app:egUseDynamicScaling="true"
 
-        app:egUseOverlapFill="false"
+        app:egUseOverlapFill="true"
         app:egLineStroke="1dp"
 
         app:egUseCubic="false"
         app:egCurveSmoothness="0.01"
 
-        app:egIndicatorLineColor="@color/colorAccent"
-        app:egIndicatorTextColor="@color/colorAccent"
+        app:egIndicatorLineColor="@color/moistureAccent"
+        app:egIndicatorTextColor="@color/moistureAccent"
 
         app:egLegendHeight="40dp"
         app:egLegendColor="@color/icons"

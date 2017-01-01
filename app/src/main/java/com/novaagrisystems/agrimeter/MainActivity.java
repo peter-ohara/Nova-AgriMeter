@@ -1,7 +1,6 @@
 package com.novaagrisystems.agrimeter;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -9,7 +8,6 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.amulyakhare.textdrawable.TextDrawable;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,13 +18,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.novaagrisystems.agrimeter.Helpers.getDate;
+import static com.novaagrisystems.agrimeter.Helpers.getTime;
+
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName();
 
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    FirebaseDatabase database;
 
-    @BindView(R.id.humidityImageView) ImageView humidityImageView;
     @BindView(R.id.currentHumidityValue) TextView currentHumidityValue;
     @BindView(R.id.humidityCurrentDate) TextView humidityCurrentDate;
     @BindView(R.id.humidityCurrentTime) TextView humidityCurrentTime;
@@ -34,21 +34,18 @@ public class MainActivity extends AppCompatActivity {
     private ChildEventListener humidityEventListener;
 
 
-    @BindView(R.id.temperatureImageView) ImageView temperatureImageView;
     @BindView(R.id.currentTemperatureValue) TextView currentTemperatureValue;
     @BindView(R.id.temperatureCurrentDate) TextView temperatureCurrentDate;
     @BindView(R.id.temperatureCurrentTime) TextView temperatureCurrentTime;
     private DatabaseReference temperatureSensorRef;
     private ChildEventListener temperatureEventListener;
 
-    @BindView(R.id.moistureImageView) ImageView moistureImageView;
     @BindView(R.id.currentMoistureValue) TextView currentMoistureValue;
     @BindView(R.id.moistureCurrentDate) TextView moistureCurrentDate;
     @BindView(R.id.moistureCurrentTime) TextView moistureCurrentTime;
     private DatabaseReference moistureSensorRef;
     private ChildEventListener moistureEventListener;
 
-    @BindView(R.id.lightImageView) ImageView lightImageView;
     @BindView(R.id.currentLightValue) TextView currentLightValue;
     @BindView(R.id.lightCurrentDate) TextView lightCurrentDate;
     @BindView(R.id.lightCurrentTime) TextView lightCurrentTime;
@@ -61,7 +58,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        database.setPersistenceEnabled(true);
+        if (database == null) {
+            database = FirebaseDatabase.getInstance();
+            database.setPersistenceEnabled(true);
+        }
 
         humiditySensorRef =  database.getReference("sensorData").child("humidity");
         temperatureSensorRef =  database.getReference("sensorData").child("temperature");
@@ -70,31 +70,12 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        setRoundColoredIcons();
+        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
 
         setHumiditySensorListener();
         setTemperatureSensorListener();
         setMoistureSensorListener();
         setLightSensorListener();
-    }
-
-    private void setRoundColoredIcons() {
-        TextDrawable humidityDrawable = TextDrawable.builder()
-                .buildRound("H", Color.RED);
-        humidityImageView.setImageDrawable(humidityDrawable);
-
-        TextDrawable temperatureDrawable = TextDrawable.builder()
-                .buildRound("T", Color.BLUE);
-        temperatureImageView.setImageDrawable(temperatureDrawable);
-
-        TextDrawable moistureDrawable = TextDrawable.builder()
-                .buildRound("M", Color.GREEN);
-        moistureImageView.setImageDrawable(moistureDrawable);
-
-        TextDrawable lightDrawable = TextDrawable.builder()
-                .buildRound("L", Color.MAGENTA);
-        lightImageView.setImageDrawable(lightDrawable);
     }
 
 
@@ -106,8 +87,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "onChildAdded:" + sensorEvent.datetime + " : " + sensorEvent.value);
 
                 currentHumidityValue.setText(sensorEvent.value.intValue() + "%");
-                humidityCurrentDate.setText(HumidityDetails.getDate(sensorEvent.datetime));
-                humidityCurrentTime.setText(HumidityDetails.getTime(sensorEvent.datetime));
+                humidityCurrentDate.setText(getDate(sensorEvent.datetime));
+                humidityCurrentTime.setText(getTime(sensorEvent.datetime));
             }
 
             @Override
@@ -140,9 +121,9 @@ public class MainActivity extends AppCompatActivity {
                 SensorEvent sensorEvent = dataSnapshot.getValue(SensorEvent.class);
                 Log.d(TAG, "onChildAdded:" + sensorEvent.datetime + " : " + sensorEvent.value);
 
-                currentTemperatureValue.setText(sensorEvent.value.intValue() + "%");
-                temperatureCurrentDate.setText(TemperatureDetails.getDate(sensorEvent.datetime));
-                temperatureCurrentTime.setText(TemperatureDetails.getTime(sensorEvent.datetime));
+                currentTemperatureValue.setText(sensorEvent.value.intValue() + "°C");
+                temperatureCurrentDate.setText(getDate(sensorEvent.datetime));
+                temperatureCurrentTime.setText(getTime(sensorEvent.datetime));
             }
 
             @Override
@@ -176,8 +157,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "onChildAdded:" + sensorEvent.datetime + " : " + sensorEvent.value);
 
                 currentMoistureValue.setText(sensorEvent.value.intValue() + "%");
-                moistureCurrentDate.setText(MoistureDetails.getDate(sensorEvent.datetime));
-                moistureCurrentTime.setText(MoistureDetails.getTime(sensorEvent.datetime));
+                moistureCurrentDate.setText(getDate(sensorEvent.datetime));
+                moistureCurrentTime.setText(getTime(sensorEvent.datetime));
             }
 
             @Override
@@ -211,8 +192,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "onChildAdded:" + sensorEvent.datetime + " : " + sensorEvent.value);
 
                 currentLightValue.setText(sensorEvent.value.intValue() + "%");
-                lightCurrentDate.setText(LightDetails.getDate(sensorEvent.datetime));
-                lightCurrentTime.setText(LightDetails.getTime(sensorEvent.datetime));
+                lightCurrentDate.setText(getDate(sensorEvent.datetime));
+                lightCurrentTime.setText(getTime(sensorEvent.datetime));
             }
 
             @Override

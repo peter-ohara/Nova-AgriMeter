@@ -18,11 +18,54 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
-    <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:colorBackground">@color/colorPrimary</item>
+
+    <style name="AppTheme.Humidity" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/humidity</item>
+        <item name="colorPrimaryDark">@color/humidityDark</item>
+        <item name="colorAccent">@color/humidityAccent</item>
+        <item name="android:colorBackground">@color/humidity</item>
     </style>
+
+    <style name="AppTheme.Temperature" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/temperature</item>
+        <item name="colorPrimaryDark">@color/temperatureDark</item>
+        <item name="colorAccent">@color/temperatureAccent</item>
+        <item name="android:colorBackground">@color/temperature</item>
+    </style>
+
+    <style name="AppTheme.Moisture" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/moisture</item>
+        <item name="colorPrimaryDark">@color/moistureDark</item>
+        <item name="colorAccent">@color/moistureAccent</item>
+        <item name="android:colorBackground">@color/moisture</item>
+    </style>
+
+    <style name="AppTheme.Light" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/light</item>
+        <item name="colorPrimaryDark">@color/lightDark</item>
+        <item name="colorAccent">@color/lightAccent</item>
+        <item name="android:colorBackground">@color/light</item>
+    </style>
+
+
+
+    <style name="CardView.Humidity" parent="CardView.Dark">
+        <item name="cardBackgroundColor">@color/humidity</item>
+        <item name="android:textColor">@color/icons</item>
+    </style>
+
+    <style name="CardView.Temperature" parent="CardView.Dark">
+        <item name="cardBackgroundColor">@color/temperature</item>
+    </style>
+
+    <style name="CardView.Moisture" parent="CardView.Dark">
+        <item name="cardBackgroundColor">@color/moisture</item>
+    </style>
+
+    <style name="CardView.Light" parent="CardView.Dark">
+        <item name="cardBackgroundColor">@color/light</item>
+    </style>
+
+
 
 </resources>
