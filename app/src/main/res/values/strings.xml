@@ -2,7 +2,112 @@
     <string name="app_name">Nova Agrimeter</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_humidity_details">Humidity</string>
-    <string name="title_activity_light_details">LightDetails</string>
-    <string name="title_activity_temperature_details">TemperatureDetails</string>
-    <string name="title_activity_moisture_details">MoistureDetails</string>
+    <string name="title_activity_light_details">Light</string>
+    <string name="title_activity_temperature_details">Temperature</string>
+    <string name="title_activity_moisture_details">Soil Moisture</string>
+
+
+    <!--Humidity-->
+    <string name="humidity_screen_title">Humidity</string>
+    <string name="humidity_meter_label">Humidity Meter</string>
+
+    <string name="humidity_low_summary">
+        <!--Below 40%-->Dry
+    </string>
+    <string name="humidity_high_summary">
+        <!--Above 90%-->Too Wet
+    </string>
+    <string name="humidity_ok_summary">
+        <!--Default-->Okay
+    </string>
+
+    <string name="humidity_low_message">
+        <!--Below 40%-->Humidity is too low. Rapid transpiration may occur
+    </string>
+    <string name="humidity_high_message">
+        <!--Above 90%-->Humidity may be too high
+    </string>
+    <string name="humidity_ok_message">
+        <!--Default-->Humidity is okay
+    </string>
+
+
+    <!--Temperature-->
+    <string name="temperature_screen_title">Temperature</string>
+    <string name="temperature_meter_label">Temperature Meter</string>
+
+    <string name="temperature_low_summary">
+        <!--Below 15°C-->Cold
+    </string>
+    <string name="temperature_high_summary">
+        <!--Above 35°C-->Hot
+    </string>
+    <string name="temperature_ok_summary">
+        <!--Default-->Perfect
+    </string>
+
+
+    <string name="temperature_low_message">
+        <!--Below 15°C-->Soil temperature is too low. Photosynthetic activity may be reduced.
+        Please remove excess shade.
+    </string>
+    <string name="temperature_high_message">
+        <!--Above 35°C-->Soil temperature is too high. Please consider watering crops
+    </string>
+    <string name="temperature_ok_message">
+        <!--Default-->Soil temperature is okay
+    </string>
+
+
+
+    <!--Moisture-->
+    <string name="moisture_screen_title">Soil Moisture</string>
+    <string name="moisture_meter_label">Moisture Meter</string>
+
+    <string name="moisture_low_summary">
+        <!--Below 20%-->Dry
+    </string>
+    <string name="moisture_high_summary">
+        <!--Above 90%-->Stuffy
+    </string>
+    <string name="moisture_ok_summary">
+        <!--Default-->Okay
+    </string>
+
+    <string name="moisture_low_message">
+        <!--Below 20%-->Soil moisture is too low. Please consider watering your plants now
+    </string>
+    <string name="moisture_high_message">
+        <!--Above 90%-->Soil moisture is too high.. Please allow some time before watering again
+    </string>
+    <string name="moisture_ok_message">
+        <!--Default-->Soil moisture is Okay
+    </string>
+
+
+    <!--Light-->
+    <string name="light_screen_title">Light</string>
+    <string name="light_meter_label">Light Meter</string>
+
+    <string name="light_low_summary">
+        <!--Below 30%-->Low
+    </string>
+    <string name="light_high_summary">
+        <!--Above 90%-->High
+    </string>
+    <string name="light_ok_summary">
+        <!--Default-->Medium
+    </string>
+
+    <string name="light_low_message">
+        <!--Below 30%-->Light levels are too low. Photosynthetic activity may reduce
+    </string>
+    <string name="light_high_message">
+        <!--Above 90%-->Light levels are too high. Consider shading your crops
+    </string>
+    <string name="light_ok_message">
+        <!--Default-->Light levels are okay
+    </string>
+
+
 </resources>

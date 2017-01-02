@@ -81,10 +81,8 @@ public class HumidityDetails extends AppCompatActivity {
                     previousSensorEvent = sensorEvent;
                 }
 
-                setSummary();
-
                 currentValue.setText(previousSensorEvent.value.intValue() + "%");
-                setValueDescription();
+                setValueDescription(previousSensorEvent.value);
 
                 humidityMeterLabel.setText(previousSensorEvent.value.intValue() + "%");
                 humidityMeter.setProgress(previousSensorEvent.value.intValue());
@@ -105,12 +103,17 @@ public class HumidityDetails extends AppCompatActivity {
                 .addValueEventListener(sensorEventListener);
     }
 
-    public void setValueDescription() {
-        valueDescription.setText("Your plants aren't getting enough light. Please consider a sunnier location or supplement with grow lights.");
-    }
-
-    public void setSummary() {
-        summary.setText("Medium");
+    public void setValueDescription(Float humidity) {
+        if (humidity < 40) {
+            summary.setText(getString(R.string.humidity_low_summary));
+            valueDescription.setText(getString(R.string.humidity_low_message));
+        } else if (humidity > 90) {
+            summary.setText(getString(R.string.humidity_high_summary));
+            valueDescription.setText(getString(R.string.humidity_high_message));
+        } else {
+            summary.setText(getString(R.string.humidity_ok_summary));
+            valueDescription.setText(getString(R.string.humidity_ok_message));
+        }
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.novaagrisystems.agrimeter;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +7,6 @@ import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -19,15 +17,11 @@ import org.eazegraph.lib.charts.ValueLineChart;
 import org.eazegraph.lib.models.ValueLinePoint;
 import org.eazegraph.lib.models.ValueLineSeries;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.novaagrisystems.agrimeter.Helpers.getTime;
 
 public class TemperatureDetails extends AppCompatActivity {
 
@@ -82,15 +76,13 @@ public class TemperatureDetails extends AppCompatActivity {
                         continue;
                     }
                     sensorEvents.add(sensorEvent);
-                    series.addPoint(new ValueLinePoint(getTime(previousSensorEvent.datetime), sensorEvent.value));
+                    series.addPoint(new ValueLinePoint(Helpers.getTime(previousSensorEvent.datetime), sensorEvent.value));
 
                     previousSensorEvent = sensorEvent;
                 }
 
-                setSummary();
-
                 currentValue.setText(previousSensorEvent.value.intValue() + "%");
-                setValueDescription();
+                setValueDescription(previousSensorEvent.value);
 
                 temperatureMeterLabel.setText(previousSensorEvent.value.intValue() + "%");
                 temperatureMeter.setProgress(previousSensorEvent.value.intValue());
@@ -111,12 +103,17 @@ public class TemperatureDetails extends AppCompatActivity {
                 .addValueEventListener(sensorEventListener);
     }
 
-    public void setValueDescription() {
-        valueDescription.setText("Your plants aren't getting enough light. Please consider a sunnier location or supplement with grow lights.");
-    }
-
-    public void setSummary() {
-        summary.setText("Medium");
+    public void setValueDescription(Float temperature) {
+        if (temperature < 15) {
+            summary.setText(getString(R.string.temperature_low_summary));
+            valueDescription.setText(getString(R.string.temperature_low_message));
+        } else if (temperature > 35) {
+            summary.setText(getString(R.string.temperature_high_summary));
+            valueDescription.setText(getString(R.string.temperature_high_message));
+        } else {
+            summary.setText(getString(R.string.temperature_ok_summary));
+            valueDescription.setText(getString(R.string.temperature_ok_message));
+        }
     }
 
     @Override
