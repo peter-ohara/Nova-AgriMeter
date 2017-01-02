@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.database.ChildEventListener;
@@ -71,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
+        getSupportActionBar().setTitle("   Overview");
 
         setHumiditySensorListener();
         setTemperatureSensorListener();
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 SensorEvent sensorEvent = dataSnapshot.getValue(SensorEvent.class);
                 Log.d(TAG, "onChildAdded:" + sensorEvent.datetime + " : " + sensorEvent.value);
 
-                currentHumidityValue.setText(sensorEvent.value.intValue() + "%");
+                currentHumidityValue.setText(sensorEvent.value.intValue() + getString(R.string.humidity_units));
                 humidityCurrentDate.setText(getDate(sensorEvent.datetime));
                 humidityCurrentTime.setText(getTime(sensorEvent.datetime));
             }
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 SensorEvent sensorEvent = dataSnapshot.getValue(SensorEvent.class);
                 Log.d(TAG, "onChildAdded:" + sensorEvent.datetime + " : " + sensorEvent.value);
 
-                currentTemperatureValue.setText(sensorEvent.value.intValue() + "°C");
+                currentTemperatureValue.setText(sensorEvent.value.intValue() + getString(R.string.temperature_units));
                 temperatureCurrentDate.setText(getDate(sensorEvent.datetime));
                 temperatureCurrentTime.setText(getTime(sensorEvent.datetime));
             }
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
                 SensorEvent sensorEvent = dataSnapshot.getValue(SensorEvent.class);
                 Log.d(TAG, "onChildAdded:" + sensorEvent.datetime + " : " + sensorEvent.value);
 
-                currentMoistureValue.setText(sensorEvent.value.intValue() + "%");
+                currentMoistureValue.setText(sensorEvent.value.intValue() + getString(R.string.moisture_units));
                 moistureCurrentDate.setText(getDate(sensorEvent.datetime));
                 moistureCurrentTime.setText(getTime(sensorEvent.datetime));
             }
@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
                 SensorEvent sensorEvent = dataSnapshot.getValue(SensorEvent.class);
                 Log.d(TAG, "onChildAdded:" + sensorEvent.datetime + " : " + sensorEvent.value);
 
-                currentLightValue.setText(sensorEvent.value.intValue() + "%");
+                currentLightValue.setText(sensorEvent.value.intValue() + getString(R.string.light_units));
                 lightCurrentDate.setText(getDate(sensorEvent.datetime));
                 lightCurrentTime.setText(getTime(sensorEvent.datetime));
             }

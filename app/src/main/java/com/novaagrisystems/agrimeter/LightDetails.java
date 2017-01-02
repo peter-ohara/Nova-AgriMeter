@@ -81,10 +81,10 @@ public class LightDetails extends AppCompatActivity {
                     previousSensorEvent = sensorEvent;
                 }
 
-                currentValue.setText(previousSensorEvent.value.intValue() + "%");
+                currentValue.setText(previousSensorEvent.value.intValue() + getString(R.string.light_units));
                 setValueDescription(previousSensorEvent.value);
 
-                lightMeterLabel.setText(previousSensorEvent.value.intValue() + "%");
+                lightMeterLabel.setText(previousSensorEvent.value.intValue() + getString(R.string.light_units));
                 lightMeter.setProgress(previousSensorEvent.value.intValue());
 
                 sensorGraph.addSeries(series);

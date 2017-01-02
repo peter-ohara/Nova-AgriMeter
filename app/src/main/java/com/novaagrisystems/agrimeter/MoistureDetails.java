@@ -81,10 +81,10 @@ public class MoistureDetails extends AppCompatActivity {
                     previousSensorEvent = sensorEvent;
                 }
 
-                currentValue.setText(previousSensorEvent.value.intValue() + "%");
+                currentValue.setText(previousSensorEvent.value.intValue() + getString(R.string.moisture_units));
                 setValueDescription(previousSensorEvent.value);
 
-                moistureMeterLabel.setText(previousSensorEvent.value.intValue() + "%");
+                moistureMeterLabel.setText(previousSensorEvent.value.intValue() + getString(R.string.moisture_units));
                 moistureMeter.setProgress(previousSensorEvent.value.intValue());
 
                 sensorGraph.addSeries(series);

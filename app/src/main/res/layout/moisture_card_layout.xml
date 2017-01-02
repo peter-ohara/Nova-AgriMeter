@@ -7,7 +7,7 @@
     style="@style/Theme.AppCompat">
 
     <TextView
-        android:text="Moisture"
+        android:text="@string/moisture_card_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/moistureTitle"

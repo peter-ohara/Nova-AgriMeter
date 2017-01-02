@@ -81,10 +81,10 @@ public class HumidityDetails extends AppCompatActivity {
                     previousSensorEvent = sensorEvent;
                 }
 
-                currentValue.setText(previousSensorEvent.value.intValue() + "%");
+                currentValue.setText(previousSensorEvent.value.intValue() + getString(R.string.humidity_units));
                 setValueDescription(previousSensorEvent.value);
 
-                humidityMeterLabel.setText(previousSensorEvent.value.intValue() + "%");
+                humidityMeterLabel.setText(previousSensorEvent.value.intValue() + getString(R.string.humidity_units));
                 humidityMeter.setProgress(previousSensorEvent.value.intValue());
 
                 sensorGraph.addSeries(series);

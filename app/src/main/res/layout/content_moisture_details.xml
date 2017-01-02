@@ -22,7 +22,8 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginStart="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="16dp" />
+        android:layout_marginLeft="16dp"
+        android:textAllCaps="false" />
 
     <TextView
         android:text="@string/moisture_ok_summary"

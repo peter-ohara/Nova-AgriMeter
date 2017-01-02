@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/title"
-        android:textSize="30sp"
+        android:textSize="28sp"
         android:fontFamily="sans-serif"
         android:textStyle="normal|bold"
         android:layout_marginTop="32dp"
@@ -39,7 +39,7 @@
 
 
     <TextView
-        tools:text="65%"
+        tools:text="65°C"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/currentValue"
@@ -50,7 +50,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:textAppearance="@style/TextAppearance.AppCompat.Display4"
         android:fontFamily="sans-serif-light"
-        android:textSize="75sp" />
+        android:textSize="72sp" />
 
     <TextView
         tools:text="Your plants aren't getting enough light. Please consider a sunnier location or supplement with grow lights."
@@ -120,7 +120,7 @@
         android:textAllCaps="true" />
 
     <TextView
-        tools:text="65.0%"
+        tools:text="65°C"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/temperatureMeterLabel"

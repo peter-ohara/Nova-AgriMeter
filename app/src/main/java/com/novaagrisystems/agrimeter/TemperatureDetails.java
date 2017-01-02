@@ -81,10 +81,10 @@ public class TemperatureDetails extends AppCompatActivity {
                     previousSensorEvent = sensorEvent;
                 }
 
-                currentValue.setText(previousSensorEvent.value.intValue() + "%");
+                currentValue.setText(previousSensorEvent.value.intValue() + getString(R.string.temperature_units));
                 setValueDescription(previousSensorEvent.value);
 
-                temperatureMeterLabel.setText(previousSensorEvent.value.intValue() + "%");
+                temperatureMeterLabel.setText(previousSensorEvent.value.intValue() + getString(R.string.temperature_units));
                 temperatureMeter.setProgress(previousSensorEvent.value.intValue());
 
                 sensorGraph.addSeries(series);

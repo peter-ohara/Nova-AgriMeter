@@ -1,35 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#4CAF50</color>
-    <color name="colorPrimaryDark">#388E3C</color>
+    <color name="colorPrimary">#009688</color>
+    <color name="colorPrimaryDark">#00796B</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="primary_text">#212121</color>
-    <color name="secondary_text">#757575</color>
     <color name="icons">#FFFFFF</color>
-    <color name="divider">#BDBDBD</color>
-
 
     <color name="humidity">#2196F3</color>
     <color name="humidityLight">#42A5F5</color>
     <color name="humidityDark">#1976D2</color>
     <color name="humidityAccent">#1E86D9</color>
 
-    <color name="temperature">#FF5722</color>
-    <color name="temperatureLight">#FF7043</color>
-    <color name="temperatureDark">#E64A19</color>
-    <color name="temperatureAccent">#E82713</color>
+    <!--<color name="temperature">#FF5722</color>-->
+    <!--<color name="temperatureLight">#FF7043</color>-->
+    <!--<color name="temperatureDark">#E64A19</color>-->
+    <!--<color name="temperatureAccent">#E82713</color>-->
+
+    <color name="temperature">#FF9800</color>
+    <color name="temperatureLight">#FFA726</color>
+    <color name="temperatureDark">#F57C00</color>
+    <color name="temperatureAccent">#E58900</color>
+
+    <!--<color name="temperature">#FFC107</color>-->
+    <!--<color name="temperatureLight">#FFCA28</color>-->
+    <!--<color name="temperatureDark">#FFA000</color>-->
+    <!--<color name="temperatureAccent">#E5AE06</color>-->
 
     <color name="moisture">#795548</color>
     <color name="moistureLight">#8D6E63</color>
     <color name="moistureDark">#5D4037</color>
     <color name="moistureAccent">#5F4339</color>
 
-    <color name="light">#FFC107</color>
-    <color name="lightLight">#FFCA28</color>
-    <color name="lightDark">#FFA000</color>
-    <color name="lightAccent">#BF9105</color>
+    <color name="light">#8BC34A</color>
+    <color name="lightLight">#9CCC65</color>
+    <color name="lightDark">#689F38</color>
+    <color name="lightAccent">#79A940</color>
+
 
     <color name="graphLineColor">#FFFFFF</color>
+
+    <color name="mainScreenBackground">#E0E0E0</color>
+
 
 </resources>
