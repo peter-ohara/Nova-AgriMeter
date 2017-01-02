@@ -82,14 +82,14 @@ public class MoistureDetails extends AppCompatActivity {
                 }
 
                 currentValue.setText(previousSensorEvent.value.intValue() + getString(R.string.moisture_units));
-                setValueDescription(previousSensorEvent.value);
+
+                summary.setText(Helpers.getMoistureSummary(MoistureDetails.this, previousSensorEvent.value));
+                valueDescription.setText(Helpers.getMoistureMessage(MoistureDetails.this, previousSensorEvent.value));
 
                 moistureMeterLabel.setText(previousSensorEvent.value.intValue() + getString(R.string.moisture_units));
                 moistureMeter.setProgress(previousSensorEvent.value.intValue());
 
                 sensorGraph.addSeries(series);
-//                sensorGraph.addStandardValue(50);
-//                sensorGraph.addStandardValue(80);
                 sensorGraph.startAnimation();
             }
 
@@ -101,19 +101,6 @@ public class MoistureDetails extends AppCompatActivity {
 
         moistureSensorRef.limitToFirst(144)
                 .addValueEventListener(sensorEventListener);
-    }
-
-    public void setValueDescription(Float moisture) {
-        if (moisture < 20) {
-            summary.setText(getString(R.string.moisture_low_summary));
-            valueDescription.setText(getString(R.string.moisture_low_message));
-        } else if (moisture > 90) {
-            summary.setText(getString(R.string.moisture_high_summary));
-            valueDescription.setText(getString(R.string.moisture_high_message));
-        } else {
-            summary.setText(getString(R.string.moisture_ok_summary));
-            valueDescription.setText(getString(R.string.moisture_ok_message));
-        }
     }
 
     @Override

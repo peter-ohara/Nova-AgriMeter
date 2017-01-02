@@ -82,14 +82,14 @@ public class HumidityDetails extends AppCompatActivity {
                 }
 
                 currentValue.setText(previousSensorEvent.value.intValue() + getString(R.string.humidity_units));
-                setValueDescription(previousSensorEvent.value);
+
+                summary.setText(Helpers.getHumiditySummary(HumidityDetails.this, previousSensorEvent.value));
+                valueDescription.setText(Helpers.getHumidityMessage(HumidityDetails.this, previousSensorEvent.value));
 
                 humidityMeterLabel.setText(previousSensorEvent.value.intValue() + getString(R.string.humidity_units));
                 humidityMeter.setProgress(previousSensorEvent.value.intValue());
 
                 sensorGraph.addSeries(series);
-//                sensorGraph.addStandardValue(50);
-//                sensorGraph.addStandardValue(80);
                 sensorGraph.startAnimation();
             }
 
@@ -101,19 +101,6 @@ public class HumidityDetails extends AppCompatActivity {
 
         humiditySensorRef.limitToFirst(144)
                 .addValueEventListener(sensorEventListener);
-    }
-
-    public void setValueDescription(Float humidity) {
-        if (humidity < 40) {
-            summary.setText(getString(R.string.humidity_low_summary));
-            valueDescription.setText(getString(R.string.humidity_low_message));
-        } else if (humidity > 90) {
-            summary.setText(getString(R.string.humidity_high_summary));
-            valueDescription.setText(getString(R.string.humidity_high_message));
-        } else {
-            summary.setText(getString(R.string.humidity_ok_summary));
-            valueDescription.setText(getString(R.string.humidity_ok_message));
-        }
     }
 
     @Override

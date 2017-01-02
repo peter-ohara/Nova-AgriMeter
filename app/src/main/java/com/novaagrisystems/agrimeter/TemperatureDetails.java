@@ -82,14 +82,14 @@ public class TemperatureDetails extends AppCompatActivity {
                 }
 
                 currentValue.setText(previousSensorEvent.value.intValue() + getString(R.string.temperature_units));
-                setValueDescription(previousSensorEvent.value);
+
+                summary.setText(Helpers.getTemperatureSummary(TemperatureDetails.this, previousSensorEvent.value));
+                valueDescription.setText(Helpers.getTemperatureMessage(TemperatureDetails.this, previousSensorEvent.value));
 
                 temperatureMeterLabel.setText(previousSensorEvent.value.intValue() + getString(R.string.temperature_units));
                 temperatureMeter.setProgress(previousSensorEvent.value.intValue());
 
                 sensorGraph.addSeries(series);
-//                sensorGraph.addStandardValue(50);
-//                sensorGraph.addStandardValue(80);
                 sensorGraph.startAnimation();
             }
 
@@ -101,19 +101,6 @@ public class TemperatureDetails extends AppCompatActivity {
 
         temperatureSensorRef.limitToFirst(144)
                 .addValueEventListener(sensorEventListener);
-    }
-
-    public void setValueDescription(Float temperature) {
-        if (temperature < 15) {
-            summary.setText(getString(R.string.temperature_low_summary));
-            valueDescription.setText(getString(R.string.temperature_low_message));
-        } else if (temperature > 35) {
-            summary.setText(getString(R.string.temperature_high_summary));
-            valueDescription.setText(getString(R.string.temperature_high_message));
-        } else {
-            summary.setText(getString(R.string.temperature_ok_summary));
-            valueDescription.setText(getString(R.string.temperature_ok_message));
-        }
     }
 
     @Override

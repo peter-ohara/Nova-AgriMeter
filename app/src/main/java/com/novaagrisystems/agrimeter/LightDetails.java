@@ -82,14 +82,14 @@ public class LightDetails extends AppCompatActivity {
                 }
 
                 currentValue.setText(previousSensorEvent.value.intValue() + getString(R.string.light_units));
-                setValueDescription(previousSensorEvent.value);
+
+                summary.setText(Helpers.getLightSummary(LightDetails.this, previousSensorEvent.value));
+                valueDescription.setText(Helpers.getLightMessage(LightDetails.this, previousSensorEvent.value));
 
                 lightMeterLabel.setText(previousSensorEvent.value.intValue() + getString(R.string.light_units));
                 lightMeter.setProgress(previousSensorEvent.value.intValue());
 
                 sensorGraph.addSeries(series);
-//                sensorGraph.addStandardValue(50);
-//                sensorGraph.addStandardValue(80);
                 sensorGraph.startAnimation();
             }
 
@@ -101,19 +101,6 @@ public class LightDetails extends AppCompatActivity {
 
         lightSensorRef.limitToFirst(144)
                 .addValueEventListener(sensorEventListener);
-    }
-
-    public void setValueDescription(Float light) {
-        if (light < 30) {
-            summary.setText(getString(R.string.light_low_summary));
-            valueDescription.setText(getString(R.string.light_low_message));
-        } else if (light > 90) {
-            summary.setText(getString(R.string.light_high_summary));
-            valueDescription.setText(getString(R.string.light_high_message));
-        } else {
-            summary.setText(getString(R.string.light_ok_summary));
-            valueDescription.setText(getString(R.string.light_ok_message));
-        }
     }
 
     @Override

@@ -17,9 +17,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.novaagrisystems.agrimeter.Helpers.getDate;
-import static com.novaagrisystems.agrimeter.Helpers.getTime;
-
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName();
@@ -28,26 +25,22 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.currentHumidityValue) TextView currentHumidityValue;
     @BindView(R.id.humidityCurrentDate) TextView humidityCurrentDate;
-    @BindView(R.id.humidityCurrentTime) TextView humidityCurrentTime;
     private DatabaseReference humiditySensorRef;
     private ChildEventListener humidityEventListener;
 
 
     @BindView(R.id.currentTemperatureValue) TextView currentTemperatureValue;
     @BindView(R.id.temperatureCurrentDate) TextView temperatureCurrentDate;
-    @BindView(R.id.temperatureCurrentTime) TextView temperatureCurrentTime;
     private DatabaseReference temperatureSensorRef;
     private ChildEventListener temperatureEventListener;
 
     @BindView(R.id.currentMoistureValue) TextView currentMoistureValue;
     @BindView(R.id.moistureCurrentDate) TextView moistureCurrentDate;
-    @BindView(R.id.moistureCurrentTime) TextView moistureCurrentTime;
     private DatabaseReference moistureSensorRef;
     private ChildEventListener moistureEventListener;
 
     @BindView(R.id.currentLightValue) TextView currentLightValue;
     @BindView(R.id.lightCurrentDate) TextView lightCurrentDate;
-    @BindView(R.id.lightCurrentTime) TextView lightCurrentTime;
     private DatabaseReference lightSensorRef;
     private ChildEventListener lightEventListener;
 
@@ -87,8 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "onChildAdded:" + sensorEvent.datetime + " : " + sensorEvent.value);
 
                 currentHumidityValue.setText(sensorEvent.value.intValue() + getString(R.string.humidity_units));
-                humidityCurrentDate.setText(getDate(sensorEvent.datetime));
-                humidityCurrentTime.setText(getTime(sensorEvent.datetime));
+                humidityCurrentDate.setText(Helpers.getHumidityMessage(MainActivity.this, sensorEvent.value));
             }
 
             @Override
@@ -122,8 +114,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "onChildAdded:" + sensorEvent.datetime + " : " + sensorEvent.value);
 
                 currentTemperatureValue.setText(sensorEvent.value.intValue() + getString(R.string.temperature_units));
-                temperatureCurrentDate.setText(getDate(sensorEvent.datetime));
-                temperatureCurrentTime.setText(getTime(sensorEvent.datetime));
+                temperatureCurrentDate.setText(Helpers.getTemperatureMessage(MainActivity.this, sensorEvent.value));
             }
 
             @Override
@@ -157,8 +148,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "onChildAdded:" + sensorEvent.datetime + " : " + sensorEvent.value);
 
                 currentMoistureValue.setText(sensorEvent.value.intValue() + getString(R.string.moisture_units));
-                moistureCurrentDate.setText(getDate(sensorEvent.datetime));
-                moistureCurrentTime.setText(getTime(sensorEvent.datetime));
+                moistureCurrentDate.setText(Helpers.getMoistureMessage(MainActivity.this, sensorEvent.value));
             }
 
             @Override
@@ -192,8 +182,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "onChildAdded:" + sensorEvent.datetime + " : " + sensorEvent.value);
 
                 currentLightValue.setText(sensorEvent.value.intValue() + getString(R.string.light_units));
-                lightCurrentDate.setText(getDate(sensorEvent.datetime));
-                lightCurrentTime.setText(getTime(sensorEvent.datetime));
+                lightCurrentDate.setText(Helpers.getLightMessage(MainActivity.this, sensorEvent.value));
             }
 
             @Override
