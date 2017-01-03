@@ -6,25 +6,20 @@
 
     <color name="icons">#FFFFFF</color>
 
+    <color name="overview">#3F51B5</color>
+    <color name="overviewLight">#5C6BC0</color>
+    <color name="overviewDark">#303F9F</color>
+    <color name="overviewAccent">#37469D</color>
+
     <color name="humidity">#2196F3</color>
     <color name="humidityLight">#42A5F5</color>
     <color name="humidityDark">#1976D2</color>
     <color name="humidityAccent">#1E86D9</color>
 
-    <!--<color name="temperature">#FF5722</color>-->
-    <!--<color name="temperatureLight">#FF7043</color>-->
-    <!--<color name="temperatureDark">#E64A19</color>-->
-    <!--<color name="temperatureAccent">#E82713</color>-->
-
     <color name="temperature">#FF9800</color>
     <color name="temperatureLight">#FFA726</color>
     <color name="temperatureDark">#F57C00</color>
     <color name="temperatureAccent">#E58900</color>
-
-    <!--<color name="temperature">#FFC107</color>-->
-    <!--<color name="temperatureLight">#FFCA28</color>-->
-    <!--<color name="temperatureDark">#FFA000</color>-->
-    <!--<color name="temperatureAccent">#E5AE06</color>-->
 
     <color name="moisture">#795548</color>
     <color name="moistureLight">#8D6E63</color>

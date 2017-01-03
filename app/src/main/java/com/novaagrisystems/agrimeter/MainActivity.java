@@ -1,6 +1,7 @@
 package com.novaagrisystems.agrimeter;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -22,6 +23,10 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = MainActivity.class.getSimpleName();
 
     FirebaseDatabase database;
+
+    @BindView(R.id.location) TextView location;
+    @BindView(R.id.lastUpdateTime) TextView lastUpdateTime;
+
 
     @BindView(R.id.currentHumidityValue) TextView currentHumidityValue;
     @BindView(R.id.humidityCurrentDate) TextView humidityCurrentDate;
@@ -62,8 +67,8 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
-        getSupportActionBar().setTitle("   Overview");
+
+        location.setText(R.string.farm_name);
 
         setHumiditySensorListener();
         setTemperatureSensorListener();
@@ -80,7 +85,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "onChildAdded:" + sensorEvent.datetime + " : " + sensorEvent.value);
 
                 currentHumidityValue.setText(sensorEvent.value.intValue() + getString(R.string.humidity_units));
-                humidityCurrentDate.setText(Helpers.getHumidityMessage(MainActivity.this, sensorEvent.value));
+                humidityCurrentDate.setText(Helpers.getHumiditySummary(MainActivity.this, sensorEvent.value));
+                lastUpdateTime.setText(Helpers.getTimeRelativeToNow(MainActivity.this, sensorEvent.datetime));
             }
 
             @Override
@@ -114,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "onChildAdded:" + sensorEvent.datetime + " : " + sensorEvent.value);
 
                 currentTemperatureValue.setText(sensorEvent.value.intValue() + getString(R.string.temperature_units));
-                temperatureCurrentDate.setText(Helpers.getTemperatureMessage(MainActivity.this, sensorEvent.value));
+                temperatureCurrentDate.setText(Helpers.getTemperatureSummary(MainActivity.this, sensorEvent.value));
             }
 
             @Override
@@ -148,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "onChildAdded:" + sensorEvent.datetime + " : " + sensorEvent.value);
 
                 currentMoistureValue.setText(sensorEvent.value.intValue() + getString(R.string.moisture_units));
-                moistureCurrentDate.setText(Helpers.getMoistureMessage(MainActivity.this, sensorEvent.value));
+                moistureCurrentDate.setText(Helpers.getMoistureSummary(MainActivity.this, sensorEvent.value));
             }
 
             @Override
@@ -182,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "onChildAdded:" + sensorEvent.datetime + " : " + sensorEvent.value);
 
                 currentLightValue.setText(sensorEvent.value.intValue() + getString(R.string.light_units));
-                lightCurrentDate.setText(Helpers.getLightMessage(MainActivity.this, sensorEvent.value));
+                lightCurrentDate.setText(Helpers.getLightSummary(MainActivity.this, sensorEvent.value));
             }
 
             @Override
@@ -210,8 +216,18 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    @OnClick(R.id.overviewCard)
+    public void openOverviewCard() {
+        Uri gmmIntentUri = Uri.parse(getString(R.string.farm_location));
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        if (mapIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(mapIntent);
+        }
+    }
+
     @OnClick(R.id.humidityCard)
-    public void openhumidityCard() {
+    public void openHumidityCard() {
         Intent intent = new Intent(MainActivity.this, HumidityDetails.class);
         startActivity(intent);
     }

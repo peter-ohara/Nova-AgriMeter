@@ -1,6 +1,7 @@
 package com.novaagrisystems.agrimeter;
 
 import android.content.Context;
+import android.text.format.DateUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,19 +13,26 @@ import java.util.Date;
 public class Helpers {
 
     public static String getDate(long time) {
-        //SimpleDateFormat formatter = new SimpleDateFormat("EEEE, MMMM d, yyyy HH:mm");
         SimpleDateFormat formatter = new SimpleDateFormat("EEE, MMM d");
         String dateString = formatter.format(new Date(time * 1000L));
         return dateString;
     }
-
-
 
     public static String getTime(long time) {
         SimpleDateFormat formatter = new SimpleDateFormat("hh:mm a");
         String dateString = formatter.format(new Date(time * 1000L));
         return dateString;
     }
+
+    public static String getTimeRelativeToNow(Context context, long time) {
+        return (String) DateUtils.getRelativeDateTimeString(context,
+                time * 1000,
+                DateUtils.DAY_IN_MILLIS,
+                DateUtils.WEEK_IN_MILLIS,
+                DateUtils.FORMAT_ABBREV_ALL);
+    }
+
+
 
     public static String getHumiditySummary(Context context, Float humidity) {
         if (humidity < 40) {

@@ -7,8 +7,14 @@
     <string name="title_activity_moisture_details">Soil Moisture</string>
 
 
+    <string name="farm_location">geo:5.973308,-0.1075031?z=15</string>
+    <string name="farm_name">Akropong, Eastern region</string>
+
 
     <!--Humidity-->
+    <string name="humidity_card_title">Humidity</string>
+    <string name="humidity_units">%</string>
+
     <string name="humidity_screen_title">Humidity</string>
     <string name="humidity_meter_label">Humidity Meter</string>
 
@@ -35,6 +41,9 @@
 
 
     <!--Temperature-->
+    <string name="temperature_card_title">Temperature</string>
+    <string name="temperature_units">°C</string>
+
     <string name="temperature_screen_title">Temperature</string>
     <string name="temperature_meter_label">Temperature Meter</string>
 
@@ -62,6 +71,9 @@
 
 
     <!--Moisture-->
+    <string name="moisture_card_title">Moisture</string>
+    <string name="moisture_units">%</string>
+
     <string name="moisture_screen_title">Soil Moisture</string>
     <string name="moisture_meter_label">Moisture Meter</string>
 
@@ -88,6 +100,9 @@
 
 
     <!--Light-->
+    <string name="light_card_title">Light</string>
+    <string name="light_units">%</string>
+
     <string name="light_screen_title">Light</string>
     <string name="light_meter_label">Light Meter</string>
 
@@ -110,12 +125,6 @@
     <string name="light_ok_message">
         <!--Default-->Light levels are okay
     </string>
-
-    <string name="humidity_units">%</string>
-    <string name="temperature_units">°C</string>
-    <string name="moisture_units">%</string>
-    <string name="light_units">%</string>
-    <string name="moisture_card_title">Soil moisture</string>
 
 
 </resources>

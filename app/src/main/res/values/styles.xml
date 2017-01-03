@@ -49,10 +49,12 @@
     </style>
 
 
+    <style name="CardView.Overview" parent="CardView.Dark">
+        <item name="cardBackgroundColor">@color/overview</item>
+    </style>
 
     <style name="CardView.Humidity" parent="CardView.Dark">
         <item name="cardBackgroundColor">@color/humidity</item>
-        <item name="android:textColor">@color/icons</item>
     </style>
 
     <style name="CardView.Temperature" parent="CardView.Dark">
