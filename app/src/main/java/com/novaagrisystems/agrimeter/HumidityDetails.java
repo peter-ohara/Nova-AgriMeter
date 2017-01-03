@@ -37,11 +37,11 @@ public class HumidityDetails extends AppCompatActivity {
     @BindView(R.id.humidityMeter) ProgressBar humidityMeter;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference humiditySensorRef = database.getReference("sensorData").child("humidity");
+    DatabaseReference sensorEventRef = database.getReference("sensorData");
 
     private ValueLineSeries series = new ValueLineSeries();
     private ValueEventListener sensorEventListener;
-    private SensorEvent previousSensorEvent = new SensorEvent(0L, 0F);
+    private SensorEvent previousSensorEvent = new SensorEvent(0L,0D,0L,0L,0L);
 
 
     @Override
@@ -70,24 +70,24 @@ public class HumidityDetails extends AppCompatActivity {
                 List<SensorEvent> sensorEvents = new ArrayList<>();
                 for (DataSnapshot sensorEventSnapshot : dataSnapshot.getChildren()) {
                     SensorEvent sensorEvent = sensorEventSnapshot.getValue(SensorEvent.class);
-                    Log.d(TAG, "onChildAdded:" + sensorEvent.datetime + " : " + sensorEvent.value);
+                    Log.d(TAG, "onChildAdded:" + sensorEvent.timestamp + " : " + sensorEvent.humidity);
 
-                    if (sensorEvent.datetime <= previousSensorEvent.datetime) {
+                    if (sensorEvent.timestamp <= previousSensorEvent.timestamp) {
                         continue;
                     }
                     sensorEvents.add(sensorEvent);
-                    series.addPoint(new ValueLinePoint(Helpers.getTime(previousSensorEvent.datetime), sensorEvent.value));
+                    series.addPoint(new ValueLinePoint(Helpers.getTime(previousSensorEvent.timestamp), sensorEvent.humidity));
 
                     previousSensorEvent = sensorEvent;
                 }
 
-                currentValue.setText(previousSensorEvent.value.intValue() + getString(R.string.humidity_units));
+                currentValue.setText(previousSensorEvent.humidity.intValue() + getString(R.string.humidity_units));
 
-                summary.setText(Helpers.getHumiditySummary(HumidityDetails.this, previousSensorEvent.value));
-                valueDescription.setText(Helpers.getHumidityMessage(HumidityDetails.this, previousSensorEvent.value));
+                summary.setText(Helpers.getHumiditySummary(HumidityDetails.this, previousSensorEvent.humidity));
+                valueDescription.setText(Helpers.getHumidityMessage(HumidityDetails.this, previousSensorEvent.humidity));
 
-                humidityMeterLabel.setText(previousSensorEvent.value.intValue() + getString(R.string.humidity_units));
-                humidityMeter.setProgress(previousSensorEvent.value.intValue());
+                humidityMeterLabel.setText(previousSensorEvent.humidity.intValue() + getString(R.string.humidity_units));
+                humidityMeter.setProgress(previousSensorEvent.humidity.intValue());
 
                 sensorGraph.addSeries(series);
                 sensorGraph.startAnimation();
@@ -99,7 +99,7 @@ public class HumidityDetails extends AppCompatActivity {
             }
         };
 
-        humiditySensorRef.limitToFirst(144)
+        sensorEventRef.limitToFirst(144)
                 .addValueEventListener(sensorEventListener);
     }
 
@@ -109,7 +109,7 @@ public class HumidityDetails extends AppCompatActivity {
 
         // Remove sensor value event listener
         if (sensorEventListener != null) {
-            humiditySensorRef.removeEventListener(sensorEventListener);
+            sensorEventRef.removeEventListener(sensorEventListener);
         }
     }
 }

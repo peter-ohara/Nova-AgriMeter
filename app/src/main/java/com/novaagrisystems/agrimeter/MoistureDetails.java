@@ -37,11 +37,11 @@ public class MoistureDetails extends AppCompatActivity {
     @BindView(R.id.moistureMeter) ProgressBar moistureMeter;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference moistureSensorRef = database.getReference("sensorData").child("soilMoisture");
+    DatabaseReference sensorEventRef = database.getReference("sensorData");
 
     private ValueLineSeries series = new ValueLineSeries();
     private ValueEventListener sensorEventListener;
-    private SensorEvent previousSensorEvent = new SensorEvent(0L, 0F);
+    private SensorEvent previousSensorEvent = new SensorEvent(0L,0D,0L,0L,0L);
 
 
     @Override
@@ -70,24 +70,24 @@ public class MoistureDetails extends AppCompatActivity {
                 List<SensorEvent> sensorEvents = new ArrayList<>();
                 for (DataSnapshot sensorEventSnapshot : dataSnapshot.getChildren()) {
                     SensorEvent sensorEvent = sensorEventSnapshot.getValue(SensorEvent.class);
-                    Log.d(TAG, "onChildAdded:" + sensorEvent.datetime + " : " + sensorEvent.value);
+                    Log.d(TAG, "onChildAdded:" + sensorEvent.timestamp + " : " + sensorEvent.soilMoisture);
 
-                    if (sensorEvent.datetime <= previousSensorEvent.datetime) {
+                    if (sensorEvent.timestamp <= previousSensorEvent.timestamp) {
                         continue;
                     }
                     sensorEvents.add(sensorEvent);
-                    series.addPoint(new ValueLinePoint(Helpers.getTime(previousSensorEvent.datetime), sensorEvent.value));
+                    series.addPoint(new ValueLinePoint(Helpers.getTime(previousSensorEvent.timestamp), sensorEvent.soilMoisture));
 
                     previousSensorEvent = sensorEvent;
                 }
 
-                currentValue.setText(previousSensorEvent.value.intValue() + getString(R.string.moisture_units));
+                currentValue.setText(previousSensorEvent.soilMoisture.intValue() + getString(R.string.moisture_units));
 
-                summary.setText(Helpers.getMoistureSummary(MoistureDetails.this, previousSensorEvent.value));
-                valueDescription.setText(Helpers.getMoistureMessage(MoistureDetails.this, previousSensorEvent.value));
+                summary.setText(Helpers.getMoistureSummary(MoistureDetails.this, previousSensorEvent.soilMoisture));
+                valueDescription.setText(Helpers.getMoistureMessage(MoistureDetails.this, previousSensorEvent.soilMoisture));
 
-                moistureMeterLabel.setText(previousSensorEvent.value.intValue() + getString(R.string.moisture_units));
-                moistureMeter.setProgress(previousSensorEvent.value.intValue());
+                moistureMeterLabel.setText(previousSensorEvent.soilMoisture.intValue() + getString(R.string.moisture_units));
+                moistureMeter.setProgress(previousSensorEvent.soilMoisture.intValue());
 
                 sensorGraph.addSeries(series);
                 sensorGraph.startAnimation();
@@ -99,7 +99,7 @@ public class MoistureDetails extends AppCompatActivity {
             }
         };
 
-        moistureSensorRef.limitToFirst(144)
+        sensorEventRef.limitToFirst(144)
                 .addValueEventListener(sensorEventListener);
     }
 
@@ -109,7 +109,7 @@ public class MoistureDetails extends AppCompatActivity {
 
         // Remove sensor value event listener
         if (sensorEventListener != null) {
-            moistureSensorRef.removeEventListener(sensorEventListener);
+            sensorEventRef.removeEventListener(sensorEventListener);
         }
     }
 }

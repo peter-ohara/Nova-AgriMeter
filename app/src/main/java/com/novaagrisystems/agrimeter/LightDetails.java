@@ -37,11 +37,11 @@ public class LightDetails extends AppCompatActivity {
     @BindView(R.id.lightMeter) ProgressBar lightMeter;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference lightSensorRef = database.getReference("sensorData").child("light");
+    DatabaseReference sensorEventRef = database.getReference("sensorData");
 
     private ValueLineSeries series = new ValueLineSeries();
     private ValueEventListener sensorEventListener;
-    private SensorEvent previousSensorEvent = new SensorEvent(0L, 0F);
+    private SensorEvent previousSensorEvent = new SensorEvent(0L,0D,0L,0L,0L);
 
 
     @Override
@@ -70,24 +70,24 @@ public class LightDetails extends AppCompatActivity {
                 List<SensorEvent> sensorEvents = new ArrayList<>();
                 for (DataSnapshot sensorEventSnapshot : dataSnapshot.getChildren()) {
                     SensorEvent sensorEvent = sensorEventSnapshot.getValue(SensorEvent.class);
-                    Log.d(TAG, "onChildAdded:" + sensorEvent.datetime + " : " + sensorEvent.value);
+                    Log.d(TAG, "onChildAdded:" + sensorEvent.timestamp + " : " + sensorEvent.light);
 
-                    if (sensorEvent.datetime <= previousSensorEvent.datetime) {
+                    if (sensorEvent.timestamp <= previousSensorEvent.timestamp) {
                         continue;
                     }
                     sensorEvents.add(sensorEvent);
-                    series.addPoint(new ValueLinePoint(Helpers.getTime(previousSensorEvent.datetime), sensorEvent.value));
+                    series.addPoint(new ValueLinePoint(Helpers.getTime(previousSensorEvent.timestamp), sensorEvent.light));
 
                     previousSensorEvent = sensorEvent;
                 }
 
-                currentValue.setText(previousSensorEvent.value.intValue() + getString(R.string.light_units));
+                currentValue.setText(previousSensorEvent.light.intValue() + getString(R.string.light_units));
 
-                summary.setText(Helpers.getLightSummary(LightDetails.this, previousSensorEvent.value));
-                valueDescription.setText(Helpers.getLightMessage(LightDetails.this, previousSensorEvent.value));
+                summary.setText(Helpers.getLightSummary(LightDetails.this, previousSensorEvent.light));
+                valueDescription.setText(Helpers.getLightMessage(LightDetails.this, previousSensorEvent.light));
 
-                lightMeterLabel.setText(previousSensorEvent.value.intValue() + getString(R.string.light_units));
-                lightMeter.setProgress(previousSensorEvent.value.intValue());
+                lightMeterLabel.setText(previousSensorEvent.light.intValue() + getString(R.string.light_units));
+                lightMeter.setProgress(previousSensorEvent.light.intValue());
 
                 sensorGraph.addSeries(series);
                 sensorGraph.startAnimation();
@@ -99,7 +99,7 @@ public class LightDetails extends AppCompatActivity {
             }
         };
 
-        lightSensorRef.limitToFirst(144)
+        sensorEventRef.limitToFirst(144)
                 .addValueEventListener(sensorEventListener);
     }
 
@@ -109,7 +109,7 @@ public class LightDetails extends AppCompatActivity {
 
         // Remove sensor value event listener
         if (sensorEventListener != null) {
-            lightSensorRef.removeEventListener(sensorEventListener);
+            sensorEventRef.removeEventListener(sensorEventListener);
         }
     }
 }

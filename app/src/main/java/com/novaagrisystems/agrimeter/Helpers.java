@@ -34,7 +34,7 @@ public class Helpers {
 
 
 
-    public static String getHumiditySummary(Context context, Float humidity) {
+    public static String getHumiditySummary(Context context, Long humidity) {
         if (humidity < 40) {
             return context.getString(R.string.humidity_low_summary);
         } else if (humidity > 90) {
@@ -44,7 +44,7 @@ public class Helpers {
         }
     }
 
-    public static String getHumidityMessage(Context context, Float humidity) {
+    public static String getHumidityMessage(Context context, Long humidity) {
         if (humidity < 40) {
             return context.getString(R.string.humidity_low_message);
         } else if (humidity > 90) {
@@ -56,7 +56,7 @@ public class Helpers {
 
 
 
-    public static String getTemperatureSummary(Context context, Float temperature) {
+    public static String getTemperatureSummary(Context context, Double temperature) {
         if (temperature < 15) {
             return context.getString(R.string.temperature_low_summary);
         } else if (temperature > 35) {
@@ -66,7 +66,7 @@ public class Helpers {
         }
     }
 
-    public static String getTemperatureMessage(Context context, Float temperature) {
+    public static String getTemperatureMessage(Context context, double temperature) {
         if (temperature < 15) {
             return context.getString(R.string.temperature_low_message);
         } else if (temperature > 35) {
@@ -78,7 +78,7 @@ public class Helpers {
 
 
 
-    public static String getMoistureSummary(Context context, Float moisture) {
+    public static String getMoistureSummary(Context context, Long moisture) {
         if (moisture < 20) {
             return context.getString(R.string.moisture_low_summary);
         } else if (moisture > 90) {
@@ -88,7 +88,7 @@ public class Helpers {
         }
     }
 
-    public static String getMoistureMessage(Context context, Float moisture) {
+    public static String getMoistureMessage(Context context, Long moisture) {
         if (moisture < 20) {
             return context.getString(R.string.moisture_low_message);
         } else if (moisture > 90) {
@@ -100,7 +100,7 @@ public class Helpers {
 
 
 
-    public static String getLightSummary(Context context, Float light) {
+    public static String getLightSummary(Context context, Long light) {
         if (light < 30) {
             return context.getString(R.string.light_low_summary);
         } else if (light > 90) {
@@ -110,7 +110,7 @@ public class Helpers {
         }
     }
 
-    public static String getLightMessage(Context context, Float light) {
+    public static String getLightMessage(Context context, Long light) {
         if (light < 30) {
             return context.getString(R.string.light_low_message);
         } else if (light > 90) {

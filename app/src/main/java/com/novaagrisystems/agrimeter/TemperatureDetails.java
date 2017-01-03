@@ -37,11 +37,11 @@ public class TemperatureDetails extends AppCompatActivity {
     @BindView(R.id.temperatureMeter) ProgressBar temperatureMeter;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference temperatureSensorRef = database.getReference("sensorData").child("temperature");
+    DatabaseReference sensorEventRef = database.getReference("sensorData");
 
     private ValueLineSeries series = new ValueLineSeries();
     private ValueEventListener sensorEventListener;
-    private SensorEvent previousSensorEvent = new SensorEvent(0L, 0F);
+    private SensorEvent previousSensorEvent = new SensorEvent(0L,0D,0L,0L,0L);
 
 
     @Override
@@ -70,24 +70,24 @@ public class TemperatureDetails extends AppCompatActivity {
                 List<SensorEvent> sensorEvents = new ArrayList<>();
                 for (DataSnapshot sensorEventSnapshot : dataSnapshot.getChildren()) {
                     SensorEvent sensorEvent = sensorEventSnapshot.getValue(SensorEvent.class);
-                    Log.d(TAG, "onChildAdded:" + sensorEvent.datetime + " : " + sensorEvent.value);
+                    Log.d(TAG, "onChildAdded:" + sensorEvent.timestamp + " : " + sensorEvent.temperature);
 
-                    if (sensorEvent.datetime <= previousSensorEvent.datetime) {
+                    if (sensorEvent.timestamp <= previousSensorEvent.timestamp) {
                         continue;
                     }
                     sensorEvents.add(sensorEvent);
-                    series.addPoint(new ValueLinePoint(Helpers.getTime(previousSensorEvent.datetime), sensorEvent.value));
+                    series.addPoint(new ValueLinePoint(Helpers.getTime(previousSensorEvent.timestamp), sensorEvent.temperature.floatValue()));
 
                     previousSensorEvent = sensorEvent;
                 }
 
-                currentValue.setText(previousSensorEvent.value.intValue() + getString(R.string.temperature_units));
+                currentValue.setText(previousSensorEvent.temperature.intValue() + getString(R.string.temperature_units));
 
-                summary.setText(Helpers.getTemperatureSummary(TemperatureDetails.this, previousSensorEvent.value));
-                valueDescription.setText(Helpers.getTemperatureMessage(TemperatureDetails.this, previousSensorEvent.value));
+                summary.setText(Helpers.getTemperatureSummary(TemperatureDetails.this, previousSensorEvent.temperature));
+                valueDescription.setText(Helpers.getTemperatureMessage(TemperatureDetails.this, previousSensorEvent.temperature));
 
-                temperatureMeterLabel.setText(previousSensorEvent.value.intValue() + getString(R.string.temperature_units));
-                temperatureMeter.setProgress(previousSensorEvent.value.intValue());
+                temperatureMeterLabel.setText(previousSensorEvent.temperature.intValue() + getString(R.string.temperature_units));
+                temperatureMeter.setProgress(previousSensorEvent.temperature.intValue());
 
                 sensorGraph.addSeries(series);
                 sensorGraph.startAnimation();
@@ -99,7 +99,7 @@ public class TemperatureDetails extends AppCompatActivity {
             }
         };
 
-        temperatureSensorRef.limitToFirst(144)
+        sensorEventRef.limitToFirst(144)
                 .addValueEventListener(sensorEventListener);
     }
 
@@ -109,7 +109,7 @@ public class TemperatureDetails extends AppCompatActivity {
 
         // Remove sensor value event listener
         if (sensorEventListener != null) {
-            temperatureSensorRef.removeEventListener(sensorEventListener);
+            sensorEventRef.removeEventListener(sensorEventListener);
         }
     }
 }
