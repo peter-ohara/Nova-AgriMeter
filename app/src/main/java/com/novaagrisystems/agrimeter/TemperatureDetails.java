@@ -37,7 +37,7 @@ public class TemperatureDetails extends AppCompatActivity {
     @BindView(R.id.temperatureMeter) ProgressBar temperatureMeter;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference sensorEventRef = database.getReference("sensorData");
+    DatabaseReference sensorEventRef = database.getReference(MainActivity.SENSOR_DATA);
 
     private ValueLineSeries series = new ValueLineSeries();
     private ValueEventListener sensorEventListener;
@@ -52,18 +52,31 @@ public class TemperatureDetails extends AppCompatActivity {
 
         series.setColor(ResourcesCompat.getColor(getResources(), R.color.graphLineColor, null));
 
-
-        getAxisBoundaries();
+        createSensorEventListener();
     }
 
-    private void getAxisBoundaries() {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        addSensorEventListener();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        removeSensorEventListener();
+    }
+
+
+
+    private void createSensorEventListener() {
         sensorEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d(TAG, "getAxisBoundaries: " + dataSnapshot.getKey());
+                Log.d(TAG, "createSensorEventListener: " + dataSnapshot.getKey());
 
                 if (dataSnapshot.getValue() == null) {
-                    Log.d(TAG, "getAxisBoundaries: value is null");
+                    Log.d(TAG, "createSensorEventListener: value is null");
                     return;
                 }
 
@@ -98,16 +111,13 @@ public class TemperatureDetails extends AppCompatActivity {
 
             }
         };
-
-        sensorEventRef.limitToFirst(144)
-                .addValueEventListener(sensorEventListener);
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
+    private void addSensorEventListener() {
+        sensorEventRef.limitToLast(144).addValueEventListener(sensorEventListener);
+    }
 
-        // Remove sensor value event listener
+    private void removeSensorEventListener() {
         if (sensorEventListener != null) {
             sensorEventRef.removeEventListener(sensorEventListener);
         }

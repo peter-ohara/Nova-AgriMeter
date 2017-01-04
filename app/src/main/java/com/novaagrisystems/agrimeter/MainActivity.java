@@ -21,6 +21,7 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName();
+    public static final String SENSOR_DATA = "sensorData";
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     private ValueEventListener sensorEventListener;
@@ -48,18 +49,34 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         database.setPersistenceEnabled(true);
-        sensorEventRef = database.getReference("sensorData");
+        sensorEventRef = database.getReference(SENSOR_DATA);
+
+        // Keep the last 144 items synced for the detail views
+        sensorEventRef.limitToLast(144).keepSynced(true);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         location.setText(R.string.farm_name);
 
-        setSensorEventListener();
+        createSensorEventListener();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        addSensorEventListener();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        removeSensorEventListener();
     }
 
 
-    private void setSensorEventListener() {
+
+    private void createSensorEventListener() {
         sensorEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -89,8 +106,17 @@ public class MainActivity extends AppCompatActivity {
 
             }
         };
+    }
+
+    private void addSensorEventListener() {
         Log.d(TAG, "Adding sensorEventListener...");
         sensorEventRef.limitToLast(1).addValueEventListener(sensorEventListener);
+    }
+
+    private void removeSensorEventListener() {
+        if (sensorEventListener != null) {
+            sensorEventRef.removeEventListener(sensorEventListener);
+        }
     }
 
 
@@ -129,12 +155,4 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        if (sensorEventListener != null) {
-            sensorEventRef.removeEventListener(sensorEventListener);
-        }
-    }
 }
